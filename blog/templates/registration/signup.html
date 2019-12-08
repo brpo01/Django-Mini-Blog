@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+    {% if form.is_valid %}
+        <h1>Thank you for registering!</h1>
+    {% endif %}
+        <h1>Register Here</h1>
+<form method="POST" class="post-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button class="btn btn-primary">Sign Up</button>
+</form>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+{% for post in posts %}
+<div class="post">
+    <div>
+        {% if search %}
+            <h3>Search Result for <span style="color:red;">{{request.GET.q}}</span></h3>
+        {% endif %}
+    </div>
+    <div class="date text-right">
+        <p>published: {{ post.published_date|timesince }} ago.</p>
+    </div>
+    <h2><a href="{% url 'blog:post_detail' pk=post.pk %}">{{ post.title|title }}</a></h2>
+    {% if post.image %}
+    <img src="{{ post.image.url }}" class='img-responsive' style="height:100vh;">
+    {% endif %}
+    <h4><p>{{ post.text|safe|truncatechars:15 }}</p></h4>
+    <h3><a href="{{post.get_absolute_url}}"</a>Read More</h3> 
+    <a class='comments' href="{% url 'blog:post_detail' pk=post.pk %}">Comments: {{ post.approved_comments.count }}</a>
+    <hr>
+</div>
+    {% empty %}
+    <p>No Posts Found</p>
+{% endfor %}
+{% endblock %}
